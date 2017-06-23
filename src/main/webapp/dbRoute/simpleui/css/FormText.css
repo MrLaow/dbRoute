@@ -1,0 +1,254 @@
+/*  ====================================================  */
+/*  = BELOW CSS USED FOR SCREEN MEDIA ==================  */
+/*  ====================================================  
+ ********************************************* *
+
+   * #Operation Style
+
+   * @version 4.0
+
+   * ********************************************* */
+
+.operation_button {
+	margin: 0px 0px 2px 0px;
+	text-align: left;
+	padding: 8px 0 0 118px;
+	overflow: hidden;
+	Min-height: 30px;
+	height: auto !important;
+	height: 30px;
+}
+
+.title {
+	border-bottom: 0;
+	text-align: left;
+	color: #fff;
+	padding: 1px;
+	font-weight: bold;
+	line-height: 15px;
+	height: 20px;
+	background-color: #f6f6f6;
+	/*margin:6px 0 6px 0;*/
+}
+.title .text {
+	color: black;
+	float: left;
+	font-size: 12px;
+	font-weight: bold;
+	text-align: left;
+	margin: 0px;
+	height: 17px;
+	padding: 3px 10px 0px 6px;
+	Min-width: 120px;
+	width: auto !important;
+	width: 120px;
+	white-space: nowrap;
+	border-left:solid 3px #e34545;
+}
+
+.operation_table {
+	/*margin: 0 10px;*/
+}
+.operation_table table {
+	width: 100%;
+	line-height: 1.7em;
+}
+.operation_table table th {
+	color: #555555;
+	/*white-space: nowrap;*/
+	font-weight: normal;
+}
+.operation_table table td {
+	*display: inline;
+}
+.operation_table img {
+	margin-right: 5px;
+	vertical-align: middle;
+}
+.operation_table textarea {
+	border: #BBB 1px solid;
+	overflow: auto;
+	padding: 4px;
+}
+
+.operation_table .input table td {
+	*display: inline;
+	height:32px;
+}
+.operation_table .input table td input{
+	height:20px;
+	line-height:20px;
+	vertical-align: middle;
+}
+.operation_table .input table td select{
+	height:24px;
+	line-height:24px;
+	vertical-align: middle;
+}
+
+.operation_table .list a {
+	color: #69C;
+	text-decoration: underline;
+}
+.operation_table .list a:hover {
+	color: #ff8100;
+	text-decoration: underline;
+}
+.operation_table .list a:visited {
+	color: #69C;
+	text-decoration: underline;
+}
+
+.input table {
+	table-layout: fixed;
+	border: 1px solid #dbdcdc;
+	border-bottom: 0;
+	border-right: 0;
+	/*margin-bottom: 3px;*/
+	border-left: 0;
+}
+.input th {
+	text-align: right;
+	width: 100px;
+	/*white-space: nowrap;*/
+	border-bottom: 1px solid #dbdcdc;
+	background-color: #f6f6f6;
+}
+.input td {
+	text-align: left;
+	border-bottom: 1px solid #dbdcdc;
+	word-wrap: break-word;
+	word-break:break-all;
+}
+.input input {
+	padding: 0px;
+	margin-top: 0px;
+	line-height: 1.3em;
+}
+
+.list table {
+	table-layout: auto;
+	border: 1px solid #dbdcdc;
+	border-bottom: 0;
+	border-right: 0;
+	/*margin-bottom: 3px;*/
+}
+.list th {
+	padding-left: 5px;
+	background-color: #f0f0f0;
+	border: 1px solid #dbdcdc;
+}
+.list td {
+	padding-left: 5px;
+	white-space: normal;
+	border: 1px solid #dbdcdc;
+	color: #656b72;
+}
+.list .t1 td {
+	background-color: #fbfcfd;
+}
+.list .t2 td {
+	background-color: #f6f6f6;
+}
+.list tr.on {
+	background: #e4f1fd;
+	color: #ea8a00;
+}
+.list tr.on td {
+	color: #ea8a00;
+}
+
+.b_foot {
+	background: url(../images/newBtn.gif) no-repeat;
+	width: 56px;
+	height: 28px  !important;
+	border: 0px;
+	margin-right: 10px;
+	line-height: 28px; 
+	cursor: pointer;
+}
+.b_foot:hover{
+	background: url(../images/newBtn.gif) no-repeat 0px -56px;
+}
+.b_foot_long {
+	background: url(../images/newBtn.gif) no-repeat 0px -28px;
+	width: 84px;
+	height: 28px  !important;
+	border: 0px;
+	margin-right: 10px;
+	line-height: 28px;
+	cursor: pointer;
+}
+.b_foot_long:hover{
+	background: url(../images/newBtn.gif) no-repeat 0px -84px;
+}
+.b_text {
+	background: url(../images/newBtn.gif) no-repeat;
+	width: 56px;
+	height: 28px !important;
+	border: 0px;
+	margin-right: 10px;
+	line-height: 28px; 
+	cursor: pointer;
+}
+.b_text:hover{
+	background: url(../images/newBtn.gif) no-repeat 0px -56px;
+}
+
+/*-------上传样式--begin------*/
+.common-upload-block{
+	border:1px solid blue;
+	width:400px;
+	height:30px;
+}
+.common-upload-file{
+	position:absolute;
+	top:0px;
+	right:0px;
+	height:22px;
+	/*IE*/
+	filter:alpha(opacity=0);
+	/*火狐*/
+	-moz-opacity:0;
+	opacity:0;
+}
+.common-upload-button{
+	position:relative;
+	display:inline-block;
+	overflow:hidden;
+	cursor:pointer;
+	height:22px;
+	padding-left:6px;
+	margin-left:10px;
+	color:#000;
+	float:left;
+}
+.common-upload-button:hover{
+	text-decoration:none;
+	color:#000;
+}
+.common-upload-text{
+	position:relative;
+	top:3px;
+	line-height:14px;
+	width:200px;
+	cursor:text;
+	padding-left:3px;
+	background:#FFFFFF;
+	float:left;
+}
+.common-upload-fileText{
+	color:blue;
+	font-size:13px;
+}
+.common-upload-remove{
+	display:inline-block;
+	width:12px;
+	height:12px;
+	background:url(../images/del-icon.gif) no-repeat;
+	margin-left:10px;
+}
+.common-upload-submit{
+	vertical-align:top;
+}
+/*-------上传样式--end------*/

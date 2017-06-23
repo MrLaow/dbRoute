@@ -1,0 +1,29 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="dbroute:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/dbroute_jar</output-path>
+    <root id="archive" name="dbroute.jar">
+      <element id="module-output" name="dbroute" />
+      <element id="extracted-dir" path="E:/environment/repository/org/springframework/spring-core/4.0.2.RELEASE/spring-core-4.0.2.RELEASE.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="E:/environment/repository/com/alibaba/druid/1.0.31/druid-1.0.31.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="E:/environment/repository/org/springframework/spring-webmvc/4.0.2.RELEASE/spring-webmvc-4.0.2.RELEASE.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="E:/environment/repository/org/springframework/spring-tx/4.0.2.RELEASE/spring-tx-4.0.2.RELEASE.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="E:/environment/repository/aopalliance/aopalliance/1.0/aopalliance-1.0.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="E:/environment/repository/com/alibaba/fastjson/1.2.15/fastjson-1.2.15.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="E:/environment/repository/org/springframework/spring-aop/4.0.2.RELEASE/spring-aop-4.0.2.RELEASE.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="D:/Programe Files/JDK/jdk1.6-64/lib/jconsole.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="E:/environment/repository/oracle/jdbc/driver/ojdbc/6/ojdbc-6.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="E:/environment/repository/org/springframework/spring-jdbc/4.0.2.RELEASE/spring-jdbc-4.0.2.RELEASE.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="E:/environment/repository/mysql/mysql-connector-java/5.1.30/mysql-connector-java-5.1.30.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="E:/environment/repository/commons-logging/commons-logging/1.1.3/commons-logging-1.1.3.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="E:/environment/repository/org/springframework/spring-beans/4.0.2.RELEASE/spring-beans-4.0.2.RELEASE.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="E:/environment/repository/org/springframework/spring-web/4.0.2.RELEASE/spring-web-4.0.2.RELEASE.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="E:/environment/repository/org/springframework/spring-context/4.0.2.RELEASE/spring-context-4.0.2.RELEASE.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="E:/environment/repository/org/springframework/spring-oxm/4.0.2.RELEASE/spring-oxm-4.0.2.RELEASE.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="E:/environment/repository/org/springframework/spring-expression/4.0.2.RELEASE/spring-expression-4.0.2.RELEASE.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="E:/environment/repository/log4j/log4j/1.2.17/log4j-1.2.17.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="E:/environment/repository/org/springframework/spring-test/4.0.2.RELEASE/spring-test-4.0.2.RELEASE.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="D:/Programe Files/JDK/jdk1.6-64/lib/tools.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="E:/environment/repository/org/springframework/spring-context-support/4.0.2.RELEASE/spring-context-support-4.0.2.RELEASE.jar" path-in-jar="/" />
+    </root>
+  </artifact>
+</component>
