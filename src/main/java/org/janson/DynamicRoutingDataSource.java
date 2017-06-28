@@ -25,7 +25,7 @@ public class DynamicRoutingDataSource extends AbstractRoutingDataSource{
     protected Object determineCurrentLookupKey() {
         final String dataSource ;
         if ((dataSource = DynamicDataSourceHolder.getDataSourceType()) == null) {
-            throw new RuntimeException("illegal operation for there is no dataSource for this Thread!");
+            return defaultDataSource.toString();
         }
         return dataSource;
     }

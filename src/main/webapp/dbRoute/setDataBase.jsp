@@ -26,7 +26,7 @@
                 datagrid:null,
                 init:function () {
 
-                    $("#dbType").combobox({
+                    $("#dbType,#dbTypeQry").combobox({
                         data:[{
                             "id":"oracle",
                             "text":"oracle"
@@ -38,13 +38,10 @@
                         valueField : "id",
                         textField : "text",
                         height:32,
-                        panelHeight:100,
-                        onSelect:function(record) {
-
-                        }
+                        panelHeight:100
                     });
 
-                    $("#isEffective").combobox({
+                    $("#isEffective,#isEffectiveQry").combobox({
                         data:[{
                             "id":"1",
                             "text":"1"
@@ -56,10 +53,7 @@
                         valueField : "id",
                         textField : "text",
                         height:32,
-                        panelHeight:100,
-                        onSelect:function(record) {
-
-                        }
+                        panelHeight:100
                     });
 
                     tenant.datagrid = $("#tenant_list").datagrid({
@@ -82,8 +76,8 @@
                         pagination:true,
                         singleSelect:true,
                         pageNumber:1,
-                        pageList:[1,2,5],
-                        pageSize:2,
+                        pageList:[5,10,15],
+                        pageSize:5,
                         toolbar:[{
                             text:"新增",
                             iconCls:"icon-add",
@@ -107,27 +101,29 @@
                                     $.messager.alert("提示", "请选择一条要修改的记录！", "warning");
                                 }
                             }
-                        }, "-"]
+                        }, "-",{
+                            text:"重置",
+                            iconCls:"icon-redo",
+                            handler:function(){
+                                $("#queryForm").form("clear");
+                                tenant.search();
+                            }
+                        },"-"]
                     });
                     tenant.search();
                 },
                 search:function () {
                     tenant.datagrid.datagrid({
-                        url:window.contextPath+"/route/queryPage"
+                        url:window.contextPath+"/route/queryPage",
+                        queryParams:{
+                            tenant:$("#tenantIdQry").val(),
+                            dbtype:$("#dbTypeQry").combobox("getValue"),
+                            iseffective:$("#isEffectiveQry").combobox("getValue")
+                        }
                     });
                 },
                 modify:function (selected) {
-                    if (selected) {
-                        $("#tenantId").val(selected["id"]);
-                        $("#tenant").val(selected["tenant"]);
-                        $("#username").val(selected["username"]);
-                        $("#password").val(selected["password"]);
-                        $("#url").val(selected["url"]);
-                        $("#dbType").combobox("setText", selected["dbtype"]);
-                        $("#isEffective").combobox("setText", selected["iseffective"]);
-                    }else{
-                        $("#tenantDialog form").form("clear");
-                    }
+                    var needAdd = false;
                     $("#tenantDialog").show();
                     var dialog = $("#tenantDialog").dialog({
                         title:"用户信息查看",
@@ -140,15 +136,22 @@
                             text:"确定",
                             iconCls:"icon-save",
                             handler:function(){
-                                tenant.add({
-                                    id:$("#tenantId").val(),
-                                    tenant:$("#tenant").val(),
-                                    username:$("#username").val(),
-                                    password:$("#password").val(),
-                                    url:$("#url").val(),
-                                    dbtype:$("#dbType").combobox("getText"),
-                                    iseffective:$("#isEffective").combobox("getText")
-                                });
+                                if (tenant.validate()) {
+                                    tenant.add({
+                                        id:$("#tenantId").val(),
+                                        tenant:$("#tenant").val(),
+                                        username:$("#username").val(),
+                                        password:$("#password").val(),
+                                        url:$("#url").val(),
+                                        dbtype:$("#dbType").combobox("getText"),
+                                        iseffective:$("#isEffective").combobox("getText"),
+                                        needAdd:needAdd
+                                    });
+                                    dialog.dialog("close");
+                                    tenant.search();
+                                }else {
+                                    $.messager.alert({title:"温馨提示",msg:"请核对数据后提交！"});
+                                }
                             }
                         },{
                             text:"关闭",
@@ -160,6 +163,29 @@
                         }]
                     });
                     dialog.dialog("open");
+
+                    if (selected) {
+                        $("#tenantId").val(selected["id"]);
+                        $("#tenant").val(selected["tenant"]);
+                        $("#username").val(selected["username"]);
+                        $("#password").val(selected["password"]);
+                        $("#url").val(selected["url"]);
+                        $("#dbType").combobox("setText", selected["dbtype"]);
+                        $("#isEffective").combobox("setText", selected["iseffective"]);
+                    }else{
+                        $("#tenantDialog form").form("clear");
+                        $.ajax({
+                            dataType : "json",
+                            type : "POST",
+                            url : window.contextPath +"/route/getId",
+                            success : function(data) {
+                                if (data) {
+                                    $("#tenantId").val(data);
+                                    needAdd = true;
+                                }
+                            }
+                        });
+                    }
                 },
                 add:function (params) {
                     $.ajax({
@@ -171,6 +197,18 @@
                             $.messager.show({title : "提示", msg : "保存成功", showType : "show" });
                         }
                     });
+                },
+                validate:function () {
+                    var rstFlag = true;
+                    if (!$("#url").val()||
+                        !$("#username").val()||
+                        !$("#password").val()||
+                        !$("#tenant").val()||
+                        !$("#dbType").combobox("getText")||
+                        !$("#isEffective").combobox("getText")) {
+                        rstFlag = false;
+                    }
+                    return rstFlag;
                 }
             };
             tenant.init();
@@ -183,29 +221,16 @@
             <div class="title">
                 <div class="text">条件过滤查询</div>
             </div>
-            <div class="input">
-                <form id="queryForm">
+            <div class="input" >
+                <form id="queryForm" style="margin-bottom: 5px;">
                     <table>
                         <tr>
-                            <th>客户经理</th>
-                            <td><select id="serviceNo" name="serviceNo"></select></td>
-
-                            <th>任务级别</th>
-                            <td><input type="text" id="taskLevelQry" /></td>
-                            <th>任务状态</th>
-                            <td><input type="text" name="taskStatusQry"
-                                       id="taskStatusQry" /></td>
-                        </tr>
-                        <tr>
-                            <th>任务名称</th>
-                            <td><input type="text" id="taskNameQry" name="taskNameQry"
-                                       maxlength="50" /></td>
-                            <th>用户姓名</th>
-                            <td><input type="text" name="userNameQry" id="userNameQry"
-                                       maxlength="50" /></td>
-                            <th>业务号码</th>
-                            <td><input type="text" name="phoneNoQry" id="phoneNoQry"
-                                       maxlength="20" /></td>
+                            <th>租户标示</th>
+                            <td><input type="text" id="tenantIdQry" /></td>
+                            <th>数据库类型</th>
+                            <td><select id="dbTypeQry" ></select></td>
+                            <th>是否有效</th>
+                            <td><select id="isEffectiveQry" name="serviceNo"></select></td>
                         </tr>
                     </table>
                 </form>
@@ -219,9 +244,9 @@
         <div class='input'>
             <form>
                 <table width="100%">
-                    <tr style="display: none;">
+                    <tr>
                         <th><span style="color: red">*</span>ID:</th>
-                        <td><input id="tenantId" type="text"/></td>
+                        <td><input id="tenantId" type="text" readonly/></td>
                     </tr>
                     <tr>
                         <th><span style="color: red">*</span>租户标识:</th>
@@ -250,7 +275,6 @@
                 </table>
             </form>
         </div>
-
     </div>
 </body>
 </html>

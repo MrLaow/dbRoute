@@ -3,8 +3,10 @@ package org.janson.dao.impl;
 import org.janson.vo.DataSourcePool;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.PreparedStatementSetter;
+import org.springframework.jdbc.core.RowCallbackHandler;
 
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
@@ -78,10 +80,8 @@ public class DataSourcePoolDaoJdbc extends AbstractDataSourcePool {
     }
 
     @Override
-    public List<DataSourcePool> queryAll() {
+    public List<DataSourcePool> queryAll(DataSourcePool sourcePool) {
         System.out.println(getDbType());
-        DataSourcePool sourcePool = new DataSourcePool();
-        sourcePool.setIseffective(1);
         final List<DataSourcePool> resultList = conditionQuery(sourcePool);
         return resultList;
     }
@@ -103,5 +103,18 @@ public class DataSourcePoolDaoJdbc extends AbstractDataSourcePool {
         resultMap.put("rows", sourcePools);
 
         return resultMap;
+    }
+
+    @Override
+    public String getNextId() {
+        String sql = "SELECT MAX(id) FROM datasourcepool ";
+        final String[] resultMsg = {null};
+        jdbcTemplate.query(sql, new RowCallbackHandler() {
+            @Override
+            public void processRow(ResultSet resultSet) throws SQLException {
+                resultMsg[0] = String.valueOf(resultSet.getInt(1) + 1);
+            }
+        });
+        return resultMsg[0];
     }
 }

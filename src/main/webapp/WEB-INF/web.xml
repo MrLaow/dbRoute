@@ -34,4 +34,15 @@
     <listener>
         <listener-class>org.springframework.web.util.IntrospectorCleanupListener</listener-class>
     </listener>
+    
+    
+    <servlet>
+        <servlet-name>datasourceSetting</servlet-name>
+        <servlet-class>org.janson.servlet.DbRouteServlet</servlet-class>
+    </servlet>
+    
+    <servlet-mapping>
+        <servlet-name>datasourceSetting</servlet-name>
+        <url-pattern>/route/*</url-pattern>
+    </servlet-mapping>
 </web-app>

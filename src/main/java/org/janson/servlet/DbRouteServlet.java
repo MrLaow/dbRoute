@@ -2,6 +2,7 @@ package org.janson.servlet;
 
 import com.alibaba.fastjson.JSONObject;
 import org.janson.service.IDataSourcePoolService;
+import org.janson.util.StringUtils;
 import org.janson.vo.DataSourcePool;
 import org.springframework.context.ApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
@@ -15,7 +16,6 @@ import java.io.PrintWriter;
 import java.lang.reflect.Method;
 import java.util.Enumeration;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -47,7 +47,7 @@ public class DbRouteServlet extends HttpServlet {
     public void init() throws ServletException {
         super.init();
         context = WebApplicationContextUtils.getWebApplicationContext(getServletContext());
-        poolService = (IDataSourcePoolService) context.getBean("dataSourcePoolService");
+        poolService = (IDataSourcePoolService) context.getBean("poolService");
     }
 
     @Override
@@ -55,9 +55,18 @@ public class DbRouteServlet extends HttpServlet {
             throws ServletException, IOException {
         String url = request.getRequestURL().toString();
         if (url.endsWith("queryPage")) {
-            Integer page = Integer.valueOf(request.getParameter("page"));
-            Integer pageSize = Integer.valueOf(request.getParameter("rows"));
-            Map<String, Object> resultMap = queryByPage(page,pageSize);
+            final Integer page = Integer.valueOf(request.getParameter("page"));
+            final Integer pageSize = Integer.valueOf(request.getParameter("rows"));
+            final String tenant = request.getParameter("tenant");
+            final String dbtype = request.getParameter("dbtype");
+            final String iseffective = request.getParameter("iseffective");
+
+            DataSourcePool sourcePool = new DataSourcePool();
+            sourcePool.setTenant(StringUtils.isEmptyOrNull(tenant) ? null : tenant);
+            sourcePool.setDbtype(StringUtils.isEmptyOrNull(dbtype) ? null : dbtype);
+            sourcePool.setIseffective(StringUtils.isEmptyOrNull(iseffective) ? null : Integer.valueOf(iseffective));
+            System.out.println(sourcePool);
+            Map<String, Object> resultMap = queryByPage(sourcePool,page,pageSize);
             output(resultMap, response);
         } else if (url.endsWith("save")) {
             Enumeration<String> enumeration = request.getParameterNames();
@@ -68,7 +77,9 @@ public class DbRouteServlet extends HttpServlet {
             }
             String rstStr = save(paramMap);
             output(rstStr, response);
-
+        } else if (url.endsWith("getId")) {
+            String nextId = getNextId();
+            output(nextId, response);
         } else {
             request.getRequestDispatcher("/dbRoute/setDataBase.jsp").forward(request, response);
         }
@@ -99,19 +110,14 @@ public class DbRouteServlet extends HttpServlet {
 
     /**
      * 分页查询
+     *
+     * @param sourcePool
      * @param page
      * @param pageSize
      * @return
      */
-    private Map<String, Object> queryByPage(Integer page, Integer pageSize) {
-//        PageHelper.startPage(page, pageSize);
-
-        List<DataSourcePool> sourcePools = poolService.listDataSources();
-//        Page pageRst = (Page) sourcePools;
-        Map<String, Object> resultMap = new HashMap<String, Object>();
-        /*resultMap.put("total", pageRst.getTotal());
-        resultMap.put("rows", pageRst);*/
-
+    private Map<String, Object> queryByPage(DataSourcePool sourcePool, Integer page, Integer pageSize) {
+        Map<String, Object> resultMap = poolService.queryByPage(sourcePool,page,pageSize);
         return resultMap;
     }
 
@@ -130,13 +136,23 @@ public class DbRouteServlet extends HttpServlet {
         for (Map.Entry<String, String> keyValue : paramMap.entrySet()) {
             try {
                 Method method = methodMap.get(keyValue.getKey());
+                if (method == null) continue;
                 String type = method.getParameterTypes()[0].getName();
                 method.invoke(sourcePool, type.endsWith("Integer") ? Integer.valueOf(keyValue.getValue()) : keyValue.getValue());
             } catch (Exception e) {
                 e.printStackTrace();
             }
         }
-        System.out.println(sourcePool);
+        if ("true".equals(paramMap.get("needAdd"))) {
+            poolService.addDataSourcePool(sourcePool);
+        } else if ("false".equals(paramMap.get("needAdd"))){
+            poolService.updateById(sourcePool);
+        }
+        System.out.println("sourcePool");
         return SUCCESS;
+    }
+
+    private String getNextId() {
+        return poolService.getNextId();
     }
 }

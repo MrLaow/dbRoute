@@ -31,7 +31,9 @@ public class TenantFilter implements Filter{
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         HttpSession session = request.getSession();
         String tenant = (String) session.getAttribute(Constant.TENAT);
-        DynamicDataSourceHolder.setDataSourceType(tenant == null? defaultTenant :tenant);
+        tenant = tenant == null ? "default" : tenant;
+        System.out.println("tenant_datasource:" + tenant);
+        DynamicDataSourceHolder.setDataSourceType(tenant);
         filterChain.doFilter(request,response);
     }
 

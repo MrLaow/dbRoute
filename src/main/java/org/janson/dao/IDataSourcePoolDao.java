@@ -46,11 +46,13 @@ public interface IDataSourcePoolDao {
      * 查询全部
      * @return
      */
-    List<DataSourcePool> queryAll();
+    List<DataSourcePool> queryAll(DataSourcePool dataSourcePool);
 
 
     /**
      * 分页查询
      */
     Map<String, Object> queryByPage(DataSourcePool dataSourcePool, Integer page, Integer pageSize);
+
+    String getNextId();
 }
