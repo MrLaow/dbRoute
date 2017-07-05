@@ -9,8 +9,8 @@
         <module name="dbroute" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel target="1.6">
-      <module name="dbroute" target="1.6" />
+    <bytecodeTargetLevel target="1.7">
+      <module name="dbroute" target="1.7" />
     </bytecodeTargetLevel>
   </component>
 </project>
