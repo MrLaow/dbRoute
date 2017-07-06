@@ -20,10 +20,7 @@ public class DataSourceHandler implements IDataSourceHandler {
      */
     private IDataSourcePoolService poolService;
 
-    public DataSourceHandler(IDataSourcePoolService poolService,DynamicRoutingDataSource dataSource) {
-        this.poolService = poolService;
-        this.dataSource = dataSource;
-        initailized();
+    public DataSourceHandler() {
     }
 
     private void initailized() {
@@ -54,4 +51,7 @@ public class DataSourceHandler implements IDataSourceHandler {
         this.dataSource = dataSource;
     }
 
+    public void setPoolService(IDataSourcePoolService poolService) {
+        this.poolService = poolService;
+    }
 }

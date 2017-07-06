@@ -16,8 +16,8 @@
     <bean id="poolService" class="org.janson.service.impl.DataSourcePoolService">
         <property name="dataSourcePoolDao" ref="poolDao"/>
     </bean>
-    <bean id="dataSourceHandler" class="org.janson.service.impl.DataSourceHandler">
-        <constructor-arg index="0" ref="poolService"/>
-        <constructor-arg index="1" ref="routedDataSource"/>
+    <bean id="dataSourceHandler" class="org.janson.service.impl.DataSourceHandler" init-method="initailized">
+        <property name="dataSource" ref="routedDataSource"/>
+        <property name="poolService" ref="poolService"/>
     </bean>
 </beans>
